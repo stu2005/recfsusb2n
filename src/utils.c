@@ -104,10 +104,23 @@ void parseOption(int argc, char * const argv[], struct Args* p_args)
 		args->ts_id = channel_table[c].tsid;
 		c = channel_table[c].freq;
 	}else
-		c = atoi(ptr);
-	if(13 <= c && c <= 62) {
+		if(ptr[0] != 'C') {
+			c = atoi(ptr);
+		}else{
+			c = atoi(ptr + 1);
+		}
+	if(ptr[0] != 'C' && 13 <= c && c <= 62) {
 		//# UHF (13, 14, .., 62)
 		args->freq = (c -  13) *  6000 +  473143;
+	}else if(ptr[0] == 'C' && 13 <= c && c <= 21) {
+		//# CATV (13, 14, .., 21)
+		args->freq = (c -  13) *  6000 +  111143;
+	}else if(ptr[0] == 'C' && c == 22) {
+		//# CATV (22)
+		args->freq = (c -  22) *  6000 +  167143;
+	}else if(ptr[0] == 'C' && 23 <= c && c <= 63) {
+		//# CATV (23, 24, .., 63)
+		args->freq = (c -  23) *  6000 +  225143;
 	}else if(101 <= c && c <= 150) {
 		//# BS-IF (101:BS-01, 103:BS-03, .., 123:BS-23)
 		args->freq = (c - 101) * 19180 + 1049480;
