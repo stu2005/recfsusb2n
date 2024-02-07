@@ -10,6 +10,8 @@
 #include <sys/file.h>
 #include <linux/usb/ch9.h>
 #include <dirent.h>
+#include <fcntl.h>
+#include <linux/limits.h>
 
 #include "usbdevfile.h"
 #include "message.h"
